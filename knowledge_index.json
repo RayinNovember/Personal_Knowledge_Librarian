@@ -1,0 +1,213 @@
+[
+  {
+    "id": "2cb8236477",
+    "url": "https://www.youtube.com/watch?v=dosOtgSdbnY&list=PLl8OlHZGYOQ7bkVbuRthEsaLr7bONzbXS&index=37",
+    "title": "Machine Learning Lecture 32: Boosting (Cornell CS4780)",
+    "summary": "This Cornell CS4780 lecture covers the Boosting ensemble method, focusing on how weak learners are sequentially combined to form a strong classifier. Key topics include AdaBoost, the theoretical foundations of boosting via exponential loss minimization, and how sample weights are updated iteratively to focus on misclassified examples. The lecture provides rigorous mathematical derivations making it useful for understanding why boosting works and its connections to forward stagewise additive modeling.",
+    "tags": [
+      "AdaBoost",
+      "Boosting",
+      "Ensemble Methods",
+      "Weak Learners",
+      "Exponential Loss",
+      "Forward Stagewise Additive Modeling"
+    ],
+    "key_concepts": [
+      "AdaBoost algorithm",
+      "Weak-to-strong learner combination",
+      "Exponential loss minimization",
+      "Iterative sample reweighting",
+      "Bias-variance tradeoff in boosting"
+    ],
+    "domain": "Machine Learning",
+    "source_type": "youtube",
+    "user_note": "",
+    "date_saved": "2026-04-19T15:22:21.380102",
+    "category": "Machine Learning",
+    "subcategory": "Ensemble Methods",
+    "topic": ""
+  },
+  {
+    "id": "374d8a568c",
+    "url": "https://arxiv.org/abs/2512.03070",
+    "title": "Mixed Data Clustering: Survey and Challenges",
+    "summary": "This paper surveys clustering methods designed for mixed data types (numerical and categorical variables), addressing limitations of traditional homogeneous-data clustering techniques in the big data era. It introduces a novel clustering approach grounded in pretopological spaces, emphasizing hierarchical and explainable algorithms that produce interpretable results. The paper benchmarks the proposed method against classical numerical clustering algorithms and existing pretopological approaches, providing insights into performance on heterogeneous datasets.",
+    "tags": [
+      "mixed data clustering",
+      "pretopological spaces",
+      "hierarchical clustering",
+      "categorical variables",
+      "explainable clustering",
+      "unsupervised learning"
+    ],
+    "key_concepts": [
+      "mixed-type data",
+      "pretopological spaces",
+      "hierarchical clustering",
+      "explainability",
+      "heterogeneous data",
+      "benchmarking"
+    ],
+    "domain": "Machine Learning",
+    "source_type": "web",
+    "user_note": "Cluster Analysis",
+    "date_saved": "2026-04-19T15:25:43.401740",
+    "category": "Machine Learning",
+    "subcategory": "Cluster Analysis",
+    "topic": ""
+  },
+  {
+    "id": "28b34c36e2",
+    "url": "https://link.springer.com/book/10.1007/978-3-319-98074-4",
+    "title": "Learning from Imbalanced Data Sets",
+    "summary": "A comprehensive textbook covering the theory and practice of imbalanced classification, including cost-sensitive learning, data-level preprocessing (e.g., oversampling/undersampling), algorithm-level solutions, and ensemble methods. It addresses both binary and multi-class imbalanced problems, data intrinsic characteristics (overlap, small disjuncts), and extends to data streams, Big Data scalability, and non-classical problems like semi-supervised learning, multilabel classification, and ordinal regression. Practical software libraries and case studies (fraud detection, disease diagnosis) are included, making it a strong reference for applying imbalanced learning in real-world data science workflows.",
+    "tags": [
+      "SMOTE",
+      "oversampling",
+      "undersampling",
+      "cost-sensitive learning",
+      "ensemble methods",
+      "class imbalance",
+      "resampling",
+      "imbalanced classification"
+    ],
+    "key_concepts": [
+      "imbalanced class distribution",
+      "data-level preprocessing",
+      "cost-sensitive learning",
+      "ensemble learning",
+      "multi-class imbalance",
+      "performance metrics for imbalanced data",
+      "data streams",
+      "Big Data scalability"
+    ],
+    "domain": "Machine Learning",
+    "source_type": "web",
+    "user_note": "Imbalance Data",
+    "date_saved": "2026-04-19T15:26:44.355347",
+    "category": "Machine Learning",
+    "subcategory": "Imbalanced Data",
+    "topic": ""
+  },
+  {
+    "id": "144010fc3e",
+    "url": "https://www.kaggle.com/competitions/m5-forecasting-accuracy/writeups/yeonjun-in-stu-1st-place-solution",
+    "title": "M5 Forecasting Accuracy Competition \u2013 1st Place Solution",
+    "summary": "This writeup details the winning solution for the M5 Forecasting Accuracy Kaggle competition, which focused on hierarchical retail sales forecasting across Walmart stores. The solution likely employs gradient boosting models (e.g., LightGBM) with extensive feature engineering including lag features, rolling statistics, and calendar/price effects. It is highly valuable as a reference for real-world time series forecasting at scale, demonstrating techniques for handling hierarchical structure, uncertainty quantification, and ensemble strategies.",
+    "tags": [
+      "LightGBM",
+      "time series forecasting",
+      "feature engineering",
+      "hierarchical forecasting",
+      "lag features",
+      "M5 competition",
+      "Walmart",
+      "gradient boosting"
+    ],
+    "key_concepts": [
+      "hierarchical time series",
+      "recursive vs. direct forecasting",
+      "lag and rolling window features",
+      "calendar effects",
+      "price elasticity features",
+      "ensemble modeling"
+    ],
+    "domain": "Machine Learning",
+    "source_type": "kaggle",
+    "user_note": "Kaggle Competition Solution",
+    "date_saved": "2026-04-19T15:29:04.415531",
+    "category": "Machine Learning",
+    "subcategory": "Case Study",
+    "topic": ""
+  },
+  {
+    "id": "4d580186a3",
+    "url": "https://stats.stackexchange.com/questions/132652/how-to-determine-which-distribution-fits-my-data-best",
+    "title": "How to Determine Which Distribution Fits Your Data Best",
+    "summary": "This resource provides a practical guide to distribution fitting in R using the fitdistrplus package, covering how to identify candidate distributions via the descdist function (skewness-kurtosis plot), fit distributions like Weibull, Normal, and Gamma, and compare them using AIC and QQ-plots. It also addresses the critical limitation of standard KS-tests with estimated parameters, demonstrating a simulation-based approach to generate a valid null distribution for the KS-statistic. The guide emphasizes that the goal is finding parsimonious approximate descriptions rather than proving an exact distributional match.",
+    "tags": [
+      "KS-test",
+      "fitdistrplus",
+      "Weibull",
+      "AIC",
+      "QQ-plot",
+      "Lilliefors test",
+      "MLE",
+      "bootstrapping",
+      "logspline",
+      "goodness-of-fit"
+    ],
+    "key_concepts": [
+      "distribution fitting",
+      "Kolmogorov-Smirnov test",
+      "AIC model comparison",
+      "simulation-based p-values",
+      "skewness-kurtosis plot"
+    ],
+    "domain": "Statistics",
+    "source_type": "web",
+    "user_note": "statistics",
+    "date_saved": "2026-04-19T15:45:52.647096"
+  },
+  {
+    "id": "1340a263d7",
+    "url": "https://www.youtube.com/watch?v=lnjrn3bF9lA&list=PLJV_el3uVTsOK_ZK5L0Iv_EQoL1JefRL4&index=39",
+    "title": "Explainable ML (1/8): Introduction to Interpretable Machine Learning",
+    "summary": "This is the first video in an 8-part lecture series on Explainable and Interpretable Machine Learning, likely from Hung-yi Lee's ML course at NTU. The series covers techniques for understanding and explaining black-box model predictions, which is critical for trust, debugging, and regulatory compliance. Topics across the series typically include local and global explanation methods, model-agnostic approaches, and intrinsically interpretable models.",
+    "tags": [
+      "Explainable AI",
+      "XAI",
+      "Interpretable ML",
+      "Black-box Models",
+      "Model Explanation"
+    ],
+    "key_concepts": [
+      "model interpretability",
+      "explainability vs accuracy tradeoff",
+      "black-box model analysis",
+      "local vs global explanations",
+      "trustworthy AI"
+    ],
+    "domain": "Machine Learning",
+    "source_type": "youtube",
+    "user_note": "Interpretable ML",
+    "date_saved": "2026-04-19T15:47:53.509053",
+    "category": "Machine Learning",
+    "subcategory": "Interpretable Machine Learning",
+    "topic": ""
+  },
+  {
+    "id": "e06af5201d",
+    "url": "https://www.kaggle.com/code/marcinrutecki/best-techniques-and-metrics-for-imbalanced-dataset",
+    "title": "Best Techniques and Metrics for Imbalanced Datasets",
+    "summary": "This Kaggle notebook provides a comprehensive guide to handling class imbalance in machine learning classification tasks. It covers resampling strategies (oversampling with SMOTE, undersampling), cost-sensitive learning, and ensemble methods tailored for imbalanced data. Evaluation metrics appropriate for imbalanced settings are emphasized, including precision-recall curves, F1-score, ROC-AUC, and Matthews Correlation Coefficient, making it a practical reference for avoiding misleading accuracy-based assessments.",
+    "tags": [
+      "SMOTE",
+      "imbalanced-learn",
+      "precision-recall",
+      "ROC-AUC",
+      "F1-score",
+      "oversampling",
+      "undersampling",
+      "class imbalance",
+      "RandomOverSampler",
+      "Matthews Correlation Coefficient"
+    ],
+    "key_concepts": [
+      "SMOTE oversampling",
+      "random undersampling",
+      "cost-sensitive learning",
+      "precision-recall tradeoff",
+      "evaluation metrics for imbalanced data",
+      "class weight adjustment",
+      "confusion matrix analysis"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Imbalanced Data",
+    "topic": "Imbalanced Dataset Handling",
+    "collection": "",
+    "source_type": "kaggle",
+    "user_note": "",
+    "date_saved": "2026-04-19T18:46:53.845366"
+  }
+]
