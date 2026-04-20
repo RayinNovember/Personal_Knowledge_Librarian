@@ -147,7 +147,10 @@
     "domain": "Statistics",
     "source_type": "web",
     "user_note": "statistics",
-    "date_saved": "2026-04-19T15:45:52.647096"
+    "date_saved": "2026-04-19T15:45:52.647096",
+    "category": "Statistics",
+    "subcategory": "",
+    "topic": ""
   },
   {
     "id": "1340a263d7",
@@ -209,5 +212,39 @@
     "source_type": "kaggle",
     "user_note": "",
     "date_saved": "2026-04-19T18:46:53.845366"
+  },
+  {
+    "id": "0b2648adc6",
+    "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4339761/",
+    "title": "Modelling Recurrent Events: A Tutorial for Analysis in Epidemiology",
+    "summary": "This tutorial covers statistical methods for analysing recurrent time-to-event data, where a participant can experience the same event multiple times. It explores conditional models (Andersen-Gill, PWP total time, PWP gap time), marginal means/rates models, frailty models, and multi-state models, explaining when each is appropriate and how to interpret results. The paper demonstrates implementation in SAS, Stata, and R using bladder cancer recurrence and respiratory infection datasets. It is particularly useful for understanding within-subject correlation adjustments and selecting the right modelling strategy for repeated event survival data.",
+    "tags": [
+      "Andersen-Gill",
+      "PWP",
+      "frailty model",
+      "multi-state model",
+      "Cox PH",
+      "recurrent events",
+      "GEE",
+      "gap time",
+      "total time"
+    ],
+    "key_concepts": [
+      "recurrent event data",
+      "within-subject correlation",
+      "conditional survival models",
+      "marginal means/rates models",
+      "frailty models",
+      "multi-state models",
+      "time-to-event analysis",
+      "gap time vs total time"
+    ],
+    "category": "Statistics",
+    "subcategory": "Survival Analysis",
+    "topic": "Recurrent Event Analysis",
+    "collection": "",
+    "source_type": "web",
+    "user_note": "",
+    "date_saved": "2026-04-19T18:55:08.633426"
   }
 ]

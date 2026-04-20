@@ -89,6 +89,21 @@ st.markdown("""
         color: #ff8888 !important;
         text-decoration: none !important;
     }
+    /* Gear toggle button — small, subtle, sits left of edit fields */
+    [data-testid="baseButton-secondary"] {
+        background: #1e1e1e !important;
+        border: 1px solid #555 !important;
+        color: #888 !important;
+        padding: 2px 8px !important;
+        font-size: 0.75rem !important;
+        font-family: 'DM Mono', monospace !important;
+        border-radius: 4px !important;
+        line-height: 1.5 !important;
+    }
+    [data-testid="baseButton-secondary"]:hover {
+        border-color: #888 !important;
+        color: #bbb !important;
+    }
     .collection-badge {
         background: #0f1420;
         border: 1px solid #1a2a40;
@@ -191,11 +206,16 @@ st.markdown("""
         background: #d4b87a !important;
     }
     .stButton > button[kind='secondary'] {
-        background: #3a1a1a !important;
-        color: #ff6b6b !important;
-        border: 1px solid #ff6b6b !important;
-        font-size: 0.75rem !important;
-        padding: 2px 10px !important;
+        background: #252525 !important;
+        color: #c8c3b8 !important;
+        border: 1px solid #3a3a3a !important;
+        border-radius: 8px !important;
+        font-family: 'DM Sans', sans-serif !important;
+        font-weight: 500 !important;
+    }
+    .stButton > button[kind='secondary']:hover {
+        background: #2e2e2e !important;
+        border-color: #555 !important;
     }
     .stSelectbox > div > div {
         background: #1a1a1a !important;
@@ -258,16 +278,14 @@ def render_card(entry):
     entry_id = entry.get("id", "")
 
     # Div audit — 6 opens, 6 closes:
-    #   open  1: <div class="card">
-    #   open  2: <div class="card-title">
-    #   close 2: </div>
-    #   open  3: <div class="card-summary">  close 3: </div>
-    #   open  4: <div style="margin-bottom"> close 4: </div>
-    #   open  5: <div class="card-meta">
-    #   open  6: <div class="card-meta-left">
-    #   close 6: </div>
-    #   close 5: </div>
-    #   close 1: </div>
+    #   open  1: div.card
+    #   open  2: div.card-title  close 2
+    #   open  3: div.card-summary  close 3
+    #   open  4: div[margin-bottom]  close 4
+    #   open  5: div.card-meta
+    #   open  6: div.card-meta-left  close 6
+    #   close 5
+    #   close 1
     card_html = (
         '<div class="card">'
             '<div class="card-title">'
@@ -286,25 +304,34 @@ def render_card(entry):
             '</div>'
         '</div>'
     )
+
     st.markdown(card_html, unsafe_allow_html=True)
 
-    tc1, tc2, tc3, tc4 = st.columns([4, 4, 4, 2])
-    with tc1:
-        new_cat = st.text_input("Category", value=entry_category(entry), key=f"cat_{entry_id}")
-    with tc2:
-        new_sub = st.text_input("Subcategory", value=entry.get("subcategory", ""), key=f"sub_{entry_id}")
-    with tc3:
-        new_topic = st.text_input("Topic", value=entry.get("topic", ""), key=f"top_{entry_id}")
-    with tc4:
-        st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
-        if st.button("Save", key=f"save_{entry_id}", type="primary"):
-            update_entry(entry_id, category=new_cat.strip(),
-                         subcategory=new_sub.strip(), topic=new_topic.strip())
+    is_editing = st.session_state.get(f"editing_{entry_id}", False)
+    gear_col, c1, c2, c3, c4 = st.columns([1, 4, 4, 4, 2])
+
+    with gear_col:
+        if st.button("⚙", key=f"gear_{entry_id}"):
+            st.session_state[f"editing_{entry_id}"] = not is_editing
             st.rerun()
+
+    if is_editing:
+        with c1:
+            new_cat = st.text_input("Category", value=entry_category(entry), key=f"cat_{entry_id}")
+        with c2:
+            new_sub = st.text_input("Subcategory", value=entry.get("subcategory", ""), key=f"sub_{entry_id}")
+        with c3:
+            new_topic = st.text_input("Topic", value=entry.get("topic", ""), key=f"top_{entry_id}")
+        with c4:
+            st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
+            if st.button("Save", key=f"save_{entry_id}", type="primary"):
+                update_entry(entry_id, category=new_cat.strip(),
+                             subcategory=new_sub.strip(), topic=new_topic.strip())
+                st.session_state[f"editing_{entry_id}"] = False
+                st.rerun()
 
 
 def main():
-    # Handle delete via query param set by the delete anchor in each card
     if "delete" in st.query_params:
         delete_entry(st.query_params["delete"])
         st.query_params.clear()
@@ -347,7 +374,7 @@ def main():
             topic_input = st.text_input("Topic", placeholder="e.g. Transformers")
         user_note = st.text_input("Your note (optional)", placeholder="e.g. good explanation of SMOTE")
 
-        if st.button("Save to library", type="primary"):
+        if st.button("Save to library", type="secondary"):
             if url_input.strip():
                 with st.spinner("Reading and summarising..."):
                     result = process_url(
@@ -389,7 +416,7 @@ def main():
 
     # --- Full library browser ---
     st.markdown("### Your library")
-    f1, f2, f3, f4 = st.columns(4)
+    f1, f2, f3 = st.columns(3)
 
     with f1:
         all_cats = ["All"] + sorted(set(entry_category(e) for e in index))
@@ -409,11 +436,7 @@ def main():
 
     topic_filtered = [e for e in subcat_filtered if browse_topic == "All" or e.get("topic") == browse_topic]
 
-    with f4:
-        all_collections = ["All"] + sorted(set(e.get("collection", "") for e in index if e.get("collection")))
-        browse_collection = st.selectbox("Collection", all_collections, key="browse_collection")
-
-    filtered = [e for e in topic_filtered if browse_collection == "All" or e.get("collection") == browse_collection]
+    filtered = topic_filtered
     filtered = sorted(filtered, key=lambda x: x.get("date_saved", ""), reverse=True)
 
     if filtered:
