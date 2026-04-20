@@ -274,10 +274,103 @@
     ],
     "category": "Machine Learning",
     "subcategory": "Imbalanced Data",
-    "topic": "Imbalanced Class Handling",
+    "topic": "Imbalanced Dataset Handling",
     "collection": "",
     "source_type": "kaggle",
     "user_note": "",
     "date_saved": "2026-04-20T09:12:34.962775"
+  },
+  {
+    "id": "f70e444f2b",
+    "url": "https://www.kaggle.com/competitions/amex-default-prediction",
+    "title": "American Express - Default Prediction (Kaggle Competition)",
+    "summary": "A Kaggle competition challenging participants to predict whether a customer will default on their credit card balance using a large-scale real-world dataset from American Express. The dataset contains aggregated customer profile features spanning delinquency, spend, payment, balance, and risk variables over time. Competitors explore gradient boosting models, feature engineering on time-series behavioral data, and ranking metrics like the custom AMEX evaluation metric combining Gini and top-4% default rate recall. Highly relevant for practitioners working on credit risk, survival analysis, and tabular ML.",
+    "tags": [
+      "LightGBM",
+      "XGBoost",
+      "credit risk",
+      "binary classification",
+      "feature engineering",
+      "imbalanced classification",
+      "Gini coefficient",
+      "tabular data"
+    ],
+    "key_concepts": [
+      "credit default prediction",
+      "imbalanced classification",
+      "time-series aggregation for tabular ML",
+      "custom ranking evaluation metric",
+      "gradient boosting on financial data"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Case Study",
+    "topic": "Credit Default Prediction / Risk Scoring",
+    "collection": "",
+    "source_type": "kaggle",
+    "user_note": "",
+    "date_saved": "2026-04-20T09:27:12.683805"
+  },
+  {
+    "id": "93f83daab0",
+    "url": "https://mpopov.com/tutorials/bayesopt-r/#references",
+    "title": "Bayesian Optimization in R",
+    "summary": "A hands-on tutorial implementing Bayesian Optimization (BayesOpt) from scratch in R using Gaussian Processes as a surrogate model. Covers the core BayesOpt algorithm with pseudocode, and implements the three major acquisition functions: Probability of Improvement (PI), Expected Improvement (EI), and GP Lower Confidence Bound (LCB). Uses the GPfit package for Gaussian process fitting and demonstrates the approach on the Forrester (2008) benchmark function, with visualizations built in ggplot2 and gganimate.",
+    "tags": [
+      "Bayesian Optimization",
+      "Gaussian Process",
+      "GPfit",
+      "Expected Improvement",
+      "Acquisition Function",
+      "R",
+      "ggplot2",
+      "gganimate",
+      "torch",
+      "Black-box Optimization"
+    ],
+    "key_concepts": [
+      "Gaussian Process prior/posterior",
+      "Acquisition functions (PI, EI, LCB)",
+      "Surrogate model",
+      "Derivative-free optimization",
+      "Sequential model-based optimization",
+      "Exploration vs exploitation tradeoff"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Bayesian Optimization",
+    "topic": "Bayesian Optimization with Gaussian Process surrogates",
+    "collection": "",
+    "source_type": "web",
+    "user_note": "",
+    "date_saved": "2026-04-20T09:29:38.774977"
+  },
+  {
+    "id": "825bf1c298",
+    "url": "https://ekamperi.github.io/machine%20learning/2021/06/11/acquisition-functions.html#expected-improvement-ei",
+    "title": "Acquisition Functions in Bayesian Optimization",
+    "summary": "This resource provides a detailed explanation of acquisition functions used in Bayesian Optimization (BO), covering Upper Confidence Bound (UCB), Probability of Improvement (PI), and their mathematical formulations. It explains how acquisition functions work alongside a surrogate model (typically a Gaussian Process) to balance exploration vs. exploitation when optimizing black-box functions. The article includes visual demonstrations and tunable parameters, making it useful for practitioners implementing or tuning BO algorithms for hyperparameter optimization or experimental design.",
+    "tags": [
+      "Bayesian Optimization",
+      "Gaussian Process",
+      "UCB",
+      "Probability of Improvement",
+      "Acquisition Function",
+      "Black-box Optimization",
+      "Surrogate Model"
+    ],
+    "key_concepts": [
+      "Upper Confidence Bound (UCB)",
+      "Probability of Improvement (PI)",
+      "Exploration vs. Exploitation tradeoff",
+      "Gaussian Process surrogate model",
+      "Black-box function optimization",
+      "Expected Improvement (EI)"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Bayesian Optimization",
+    "topic": "Bayesian Optimization Acquisition Functions",
+    "collection": "",
+    "source_type": "web",
+    "user_note": "Bayesian Optimization Algorithms",
+    "date_saved": "2026-04-20T09:31:03.935264"
   }
 ]

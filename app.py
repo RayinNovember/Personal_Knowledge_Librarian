@@ -72,23 +72,6 @@ st.markdown("""
         align-items: center;
         flex-wrap: wrap;
     }
-    .delete-btn {
-        font-family: 'DM Mono', monospace !important;
-        font-size: 0.7rem !important;
-        padding: 2px 8px !important;
-        border-radius: 4px !important;
-        border: 1px solid #5a2020 !important;
-        color: #ff6b6b !important;
-        background: #2a1010 !important;
-        cursor: pointer !important;
-        text-decoration: none !important;
-        white-space: nowrap;
-    }
-    .delete-btn:hover {
-        border-color: #ff6b6b !important;
-        color: #ff8888 !important;
-        text-decoration: none !important;
-    }
     /* Gear toggle button — small, subtle, sits left of edit fields */
     [data-testid="baseButton-secondary"] {
         background: #1e1e1e !important;
@@ -194,16 +177,16 @@ st.markdown("""
         color: #f0ebe0 !important;
     }
     [data-testid="baseButton-primary"] {
-        background: #c9a96e !important;
-        color: #0f0f0f !important;
-        border: none !important;
+        background: #2a1010 !important;
+        color: #ff6b6b !important;
+        border: 1px solid #5a2020 !important;
         border-radius: 8px !important;
-        font-family: 'DM Sans', sans-serif !important;
-        font-weight: 500 !important;
-        padding: 0.5rem 1.5rem !important;
+        font-family: 'DM Mono', monospace !important;
+        font-weight: 400 !important;
     }
     [data-testid="baseButton-primary"]:hover {
-        background: #d4b87a !important;
+        border-color: #ff6b6b !important;
+        color: #ff8888 !important;
     }
     .stButton > button[kind='secondary'] {
         background: #252525 !important;
@@ -278,14 +261,8 @@ def render_card(entry):
     entry_id = entry.get("id", "")
 
     # Div audit — 6 opens, 6 closes:
-    #   open  1: div.card
-    #   open  2: div.card-title  close 2
-    #   open  3: div.card-summary  close 3
-    #   open  4: div[margin-bottom]  close 4
-    #   open  5: div.card-meta
-    #   open  6: div.card-meta-left  close 6
-    #   close 5
-    #   close 1
+    #   1: div.card  2: div.card-title/2  3: div.card-summary/3
+    #   4: div[tags]/4  5: div.card-meta  6: div.card-meta-left/6  /5  /1
     card_html = (
         '<div class="card">'
             '<div class="card-title">'
@@ -300,7 +277,6 @@ def render_card(entry):
                     f'{collection_html}'
                     f'<span>{date_str}</span>'
                 '</div>'
-                f'<a class="delete-btn" href="?delete={entry_id}">delete</a>'
             '</div>'
         '</div>'
     )
@@ -308,7 +284,7 @@ def render_card(entry):
     st.markdown(card_html, unsafe_allow_html=True)
 
     is_editing = st.session_state.get(f"editing_{entry_id}", False)
-    gear_col, c1, c2, c3, c4 = st.columns([1, 4, 4, 4, 2])
+    gear_col, c1, c2, c3, c4, c5 = st.columns([1, 4, 4, 4, 2, 2])
 
     with gear_col:
         if st.button("⚙", key=f"gear_{entry_id}"):
@@ -324,19 +300,19 @@ def render_card(entry):
             new_topic = st.text_input("Topic", value=entry.get("topic", ""), key=f"top_{entry_id}")
         with c4:
             st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
-            if st.button("Save", key=f"save_{entry_id}", type="secondary"):
+            if st.button("Save", key=f"save_{entry_id}", type="secondary", use_container_width=True):
                 update_entry(entry_id, category=new_cat.strip(),
                              subcategory=new_sub.strip(), topic=new_topic.strip())
                 st.session_state[f"editing_{entry_id}"] = False
                 st.rerun()
+        with c5:
+            st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
+            if st.button("delete", key=f"delete_{entry_id}", type="primary", use_container_width=True):
+                delete_entry(entry_id)
+                st.rerun()
 
 
 def main():
-    if "delete" in st.query_params:
-        delete_entry(st.query_params["delete"])
-        st.query_params.clear()
-        st.rerun()
-
     # Header
     st.markdown('<div class="hero-title">Knowledge Librarian</div>', unsafe_allow_html=True)
     st.markdown('<div class="hero-sub">Personal Knowledge Index</div>', unsafe_allow_html=True)
