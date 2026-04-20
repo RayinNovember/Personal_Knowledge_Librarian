@@ -246,5 +246,38 @@
     "source_type": "web",
     "user_note": "",
     "date_saved": "2026-04-19T18:55:08.633426"
+  },
+  {
+    "id": "7ba7de5182",
+    "url": "https://www.kaggle.com/code/janiobachmann/credit-fraud-dealing-with-imbalanced-datasets#notebook-container",
+    "title": "Credit Fraud Detection: Dealing with Imbalanced Datasets",
+    "summary": "This Kaggle notebook tackles credit card fraud detection using the classic imbalanced dataset where fraudulent transactions represent a tiny minority of cases. It covers techniques for handling class imbalance including undersampling, oversampling with SMOTE, and proper cross-validation strategies to avoid data leakage. The notebook demonstrates logistic regression and tree-based classifiers, emphasizing evaluation metrics appropriate for imbalanced data such as precision-recall curves, F1-score, and AUPRC rather than accuracy.",
+    "tags": [
+      "SMOTE",
+      "imbalanced-learn",
+      "undersampling",
+      "oversampling",
+      "LogisticRegression",
+      "RandomForest",
+      "precision-recall",
+      "fraud detection"
+    ],
+    "key_concepts": [
+      "class imbalance",
+      "SMOTE oversampling",
+      "random undersampling",
+      "precision-recall AUC",
+      "cross-validation",
+      "anomaly detection",
+      "confusion matrix",
+      "fraud detection"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Imbalanced Data",
+    "topic": "Imbalanced Class Handling",
+    "collection": "",
+    "source_type": "kaggle",
+    "user_note": "",
+    "date_saved": "2026-04-20T09:12:34.962775"
   }
 ]

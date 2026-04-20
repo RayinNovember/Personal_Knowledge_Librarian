@@ -324,7 +324,7 @@ def render_card(entry):
             new_topic = st.text_input("Topic", value=entry.get("topic", ""), key=f"top_{entry_id}")
         with c4:
             st.markdown("<div style='height:28px'></div>", unsafe_allow_html=True)
-            if st.button("Save", key=f"save_{entry_id}", type="primary"):
+            if st.button("Save", key=f"save_{entry_id}", type="secondary"):
                 update_entry(entry_id, category=new_cat.strip(),
                              subcategory=new_sub.strip(), topic=new_topic.strip())
                 st.session_state[f"editing_{entry_id}"] = False
