@@ -1,6 +1,6 @@
 """
 librarian.py — core logic for the Knowledge Librarian app.
-Handles URL extraction, Claude summarization, and index management.
+Handles URL extraction, Claude summarization, and Supabase index management.
 """
 
 import os
@@ -11,32 +11,60 @@ from datetime import datetime
 from urllib.parse import urlparse
 import anthropic
 import certifi
-import os
 os.environ["SSL_CERT_FILE"] = certifi.where()
 os.environ["REQUESTS_CA_BUNDLE"] = certifi.where()
 
+from supabase import create_client, Client
+
 # ─── Config ───────────────────────────────────────────────────────────────────
 
-INDEX_PATH = "knowledge_index.json"
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+SUPABASE_URL      = os.environ.get("SUPABASE_URL", "")
+SUPABASE_KEY      = os.environ.get("SUPABASE_KEY", "")
+
+def get_supabase() -> Client:
+    return create_client(SUPABASE_URL, SUPABASE_KEY)
+
 
 # ─── Index management ─────────────────────────────────────────────────────────
 
 def load_index() -> list:
-    if not os.path.exists(INDEX_PATH):
+    try:
+        sb = get_supabase()
+        response = sb.table("knowledge_index").select("*").order("date_saved", desc=True).execute()
+        return response.data or []
+    except Exception as e:
+        print(f"load_index error: {e}")
         return []
-    with open(INDEX_PATH, "r") as f:
-        return json.load(f)
-
-
-def save_index(index: list):
-    with open(INDEX_PATH, "w") as f:
-        json.dump(index, f, indent=2)
 
 
 def url_already_saved(url: str) -> bool:
-    index = load_index()
-    return any(e["url"] == url for e in index)
+    try:
+        sb = get_supabase()
+        response = sb.table("knowledge_index").select("id").eq("url", url).execute()
+        return len(response.data) > 0
+    except Exception:
+        return False
+
+
+def delete_entry(entry_id: str) -> bool:
+    try:
+        sb = get_supabase()
+        sb.table("knowledge_index").delete().eq("id", entry_id).execute()
+        return True
+    except Exception as e:
+        print(f"delete_entry error: {e}")
+        return False
+
+
+def update_entry(entry_id: str, **fields) -> bool:
+    try:
+        sb = get_supabase()
+        sb.table("knowledge_index").update(fields).eq("id", entry_id).execute()
+        return True
+    except Exception as e:
+        print(f"update_entry error: {e}")
+        return False
 
 
 # ─── URL detection ────────────────────────────────────────────────────────────
@@ -55,11 +83,9 @@ def detect_source_type(url: str) -> str:
 def extract_youtube(url: str) -> dict:
     """Extract video description from a YouTube URL."""
     try:
-        from youtube_transcript_api import YouTubeTranscriptApi
         import requests
         from bs4 import BeautifulSoup
 
-        # Get video ID
         video_id = None
         if "v=" in url:
             video_id = url.split("v=")[1].split("&")[0]
@@ -69,12 +95,10 @@ def extract_youtube(url: str) -> dict:
         if not video_id:
             return {"success": False, "error": "Could not extract video ID from URL"}
 
-        # Fetch page for title and description
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
         response = requests.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(response.text, "html.parser")
 
-        # Title
         title = ""
         title_tag = soup.find("meta", property="og:title")
         if title_tag:
@@ -84,14 +108,11 @@ def extract_youtube(url: str) -> dict:
             if title_tag:
                 title = title_tag.text.replace(" - YouTube", "").strip()
 
-        # Description (og:description gives the short version)
         description = ""
         desc_tag = soup.find("meta", property="og:description")
         if desc_tag:
             description = desc_tag.get("content", "")
 
-        # Try to get the full description from page source
-        # YouTube embeds it in a JSON blob
         match = re.search(r'"shortDescription":"(.*?)"(?:,"isCrawlable")', response.text)
         if match:
             description = match.group(1).replace("\\n", "\n").replace('\\"', '"')
@@ -120,7 +141,6 @@ def extract_kaggle(url: str) -> dict:
         response = requests.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(response.text, "html.parser")
 
-        # Title
         title = ""
         title_tag = soup.find("meta", property="og:title")
         if title_tag:
@@ -130,14 +150,11 @@ def extract_kaggle(url: str) -> dict:
             if title_tag:
                 title = title_tag.text.strip()
 
-        # Description
         content = ""
         desc_tag = soup.find("meta", property="og:description")
         if desc_tag:
             content = desc_tag.get("content", "")
 
-        # Try to get more text from the page body
-        # Kaggle notebooks: look for script content or main text areas
         for tag in soup.find_all(["p", "h1", "h2", "h3"], limit=20):
             text = tag.get_text(strip=True)
             if len(text) > 50:
@@ -168,7 +185,6 @@ def extract_generic(url: str) -> dict:
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
         response = requests.get(url, headers=headers, timeout=15)
 
-        # Title from meta tags
         soup = BeautifulSoup(response.text, "html.parser")
         title = ""
         title_tag = soup.find("meta", property="og:title")
@@ -179,7 +195,6 @@ def extract_generic(url: str) -> dict:
             if title_tag:
                 title = title_tag.text.strip()
 
-        # Main content via trafilatura
         content = trafilatura.extract(
             response.text,
             include_comments=False,
@@ -188,7 +203,6 @@ def extract_generic(url: str) -> dict:
         )
 
         if not content:
-            # Fallback: grab all paragraph text
             paragraphs = soup.find_all("p")
             content = "\n".join(p.get_text(strip=True) for p in paragraphs if len(p.get_text(strip=True)) > 40)
 
@@ -220,12 +234,7 @@ def extract_content(url: str) -> dict:
 # ─── Claude summarization ─────────────────────────────────────────────────────
 
 def summarize_with_claude(title: str, content: str, url: str, source_type: str, user_note: str = None) -> dict:
-    """
-    Send extracted content to Claude and get back a structured summary card.
-    Returns: { title, summary, tags, category, subcategory, topic, key_concepts }
-    """
     client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-
     note_section = f"\nUser's note: {user_note}" if user_note else ""
 
     prompt = f"""You are a knowledge librarian. A data scientist with expertise in Power BI, Microsoft Fabric, Machine Learning, Causal Inference, Time Series Analysis, Survival Analysis, and Deep Learning has saved this resource.
@@ -263,8 +272,6 @@ Rules:
         )
 
         raw = response.content[0].text.strip()
-
-        # Strip markdown code fences if present
         raw = re.sub(r'^```(?:json)?\s*', '', raw)
         raw = re.sub(r'\s*```$', '', raw)
 
@@ -281,20 +288,13 @@ Rules:
 
 def process_url(url: str, user_note: str = None, collection: str = None,
                 category: str = None, subcategory: str = None, topic: str = None) -> dict:
-    """
-    Full pipeline: extract → summarize → save to index.
-    Returns { success, entry } or { success, error }
-    """
-    # Check for duplicates
     if url_already_saved(url):
         return {"success": False, "error": "This URL is already in your library."}
 
-    # Extract content
     extraction = extract_content(url)
     if not extraction["success"]:
         return {"success": False, "error": f"Extraction failed: {extraction['error']}"}
 
-    # Summarize with Claude
     summary_result = summarize_with_claude(
         title=extraction["title"],
         content=extraction["content"],
@@ -308,85 +308,54 @@ def process_url(url: str, user_note: str = None, collection: str = None,
 
     card = summary_result["data"]
 
-    # Build the index entry
     entry = {
-        "id": hashlib.md5(url.encode()).hexdigest()[:10],
-        "url": url,
-        "title": card.get("title", extraction["title"]),
-        "summary": card.get("summary", ""),
-        "tags": card.get("tags", []),
+        "id":           hashlib.md5(url.encode()).hexdigest()[:10],
+        "url":          url,
+        "title":        card.get("title", extraction["title"]),
+        "summary":      card.get("summary", ""),
+        "tags":         card.get("tags", []),
         "key_concepts": card.get("key_concepts", []),
-        "category": category or card.get("category", "General"),
-        "subcategory": subcategory or card.get("subcategory", ""),
-        "topic": topic or card.get("topic", ""),
-        "collection": collection or "",
-        "source_type": extraction["source_type"],
-        "user_note": user_note or "",
-        "date_saved": datetime.now().isoformat(),
+        "category":     category    or card.get("category", "General"),
+        "subcategory":  subcategory or card.get("subcategory", ""),
+        "topic":        topic       or card.get("topic", ""),
+        "collection":   collection  or "",
+        "source_type":  extraction["source_type"],
+        "user_note":    user_note   or "",
+        "date_saved":   datetime.now().isoformat(),
     }
 
-    # Save to index
-    index = load_index()
-    index.append(entry)
-    save_index(index)
+    try:
+        sb = get_supabase()
+        sb.table("knowledge_index").insert(entry).execute()
+    except Exception as e:
+        return {"success": False, "error": f"Database save failed: {e}"}
 
     return {"success": True, "entry": entry}
-
-
-# ─── Update ───────────────────────────────────────────────────────────────────
-
-def update_entry(entry_id: str, **fields) -> bool:
-    index = load_index()
-    for entry in index:
-        if entry["id"] == entry_id:
-            entry.update(fields)
-            save_index(index)
-            return True
-    return False
-
-
-# ─── Delete ───────────────────────────────────────────────────────────────────
-
-def delete_entry(entry_id: str) -> bool:
-    index = load_index()
-    new_index = [e for e in index if e["id"] != entry_id]
-    if len(new_index) == len(index):
-        return False
-    save_index(new_index)
-    return True
 
 
 # ─── Search ───────────────────────────────────────────────────────────────────
 
 def entry_category(entry: dict) -> str:
-    """Return category with fallback to legacy domain field."""
     return entry.get("category") or entry.get("domain", "General")
 
 
 def search_index(query: str, category: str = None, source_type: str = None) -> list:
-    """
-    Search the knowledge index by keyword match across title, summary, tags,
-    key_concepts, and user_note. Optionally filter by category or source_type.
-    Returns ranked results (most relevant first).
-    """
     index = load_index()
     query_terms = query.lower().split()
 
     scored = []
     for entry in index:
-        # Apply filters (category falls back to legacy domain)
         if category and entry_category(entry) != category:
             continue
         if source_type and entry.get("source_type") != source_type:
             continue
 
-        # Score the entry
         score = 0
         searchable = " ".join([
             entry.get("title", ""),
             entry.get("summary", ""),
-            " ".join(entry.get("tags", [])),
-            " ".join(entry.get("key_concepts", [])),
+            " ".join(entry.get("tags", []) if isinstance(entry.get("tags"), list) else []),
+            " ".join(entry.get("key_concepts", []) if isinstance(entry.get("key_concepts"), list) else []),
             entry.get("user_note", ""),
             entry.get("category", ""),
             entry.get("subcategory", ""),
@@ -396,19 +365,17 @@ def search_index(query: str, category: str = None, source_type: str = None) -> l
         ]).lower()
 
         for term in query_terms:
-            # Exact match in tags/key_concepts scores higher
-            if any(term in t.lower() for t in entry.get("tags", []) + entry.get("key_concepts", [])):
+            tags = entry.get("tags", []) if isinstance(entry.get("tags"), list) else []
+            concepts = entry.get("key_concepts", []) if isinstance(entry.get("key_concepts"), list) else []
+            if any(term in t.lower() for t in tags + concepts):
                 score += 3
-            # Match in title scores high
             if term in entry.get("title", "").lower():
                 score += 2
-            # Match anywhere
             if term in searchable:
                 score += 1
 
         if score > 0:
             scored.append((score, entry))
 
-    # Sort by score descending
     scored.sort(key=lambda x: x[0], reverse=True)
     return [entry for _, entry in scored]
