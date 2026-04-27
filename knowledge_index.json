@@ -372,5 +372,159 @@
     "source_type": "web",
     "user_note": "Bayesian Optimization Algorithms",
     "date_saved": "2026-04-20T09:31:03.935264"
+  },
+  {
+    "id": "b9f891a7fa",
+    "url": "https://github.com/Mcompetitions/M5-methods/tree/master/Code%20of%20Winning%20Methods/U2",
+    "title": "M5 Competition U2 Winning Method: LightGBM Point Forecast + Distribution Build",
+    "summary": "This repository contains the U2 winning submission code for the M5 Forecasting competition, covering both point forecasts and uncertainty estimation. Stage 1 uses LightGBM (based on public M5 notebooks) for point forecasting with feature engineering, training, and prediction scripts in Python. Stage 2 builds a probabilistic distribution around the point forecasts using a .NET executable on Windows, producing the final uncertainty submission file. Useful as a reference implementation for combining gradient boosting point forecasts with distributional uncertainty quantification in time series competitions.",
+    "tags": [
+      "LightGBM",
+      "M5",
+      "time series forecasting",
+      "uncertainty quantification",
+      "probabilistic forecasting",
+      "feature engineering"
+    ],
+    "key_concepts": [
+      "point forecasting",
+      "probabilistic forecasting",
+      "LightGBM",
+      "uncertainty estimation",
+      "M5 competition",
+      "distribution modeling"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Case Study",
+    "topic": "Hierarchical demand forecasting with uncertainty estimation",
+    "collection": "",
+    "source_type": "web",
+    "user_note": "",
+    "date_saved": "2026-04-20T15:43:57.562111"
+  },
+  {
+    "id": "eb7bb73a60",
+    "url": "https://www.youtube.com/watch?v=AMF1zMN4M8o",
+    "title": "UMAP Explained Simply",
+    "summary": "This video provides an accessible explanation of UMAP (Uniform Manifold Approximation and Projection), demonstrated on the MNIST dataset and single-cell RNA sequencing data. It covers key parameters n_neighbors and min_dist, contrasts UMAP with PCA, and explains the underlying mathematics including the cost function, gradient descent optimization, and parameter estimation for a and b based on min_dist. Useful for practitioners who want both intuitive understanding and mathematical grounding of UMAP for dimensionality reduction tasks.",
+    "tags": [
+      "UMAP",
+      "PCA",
+      "dimensionality reduction",
+      "n_neighbors",
+      "min_dist",
+      "MNIST",
+      "scRNAseq",
+      "manifold learning",
+      "gradient descent"
+    ],
+    "key_concepts": [
+      "UMAP",
+      "manifold approximation",
+      "n_neighbors parameter",
+      "min_dist parameter",
+      "UMAP vs PCA",
+      "cost function optimization",
+      "gradient descent in UMAP",
+      "fuzzy topological structure",
+      "low-dimensional embedding"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Unsupervised Learning",
+    "topic": "Dimension Reduction",
+    "collection": "",
+    "source_type": "youtube",
+    "user_note": "",
+    "date_saved": "2026-04-20T15:46:03.133270"
+  },
+  {
+    "id": "55b0d72944",
+    "url": "https://www.youtube.com/watch?v=Chng7-nfDOo&t=63s",
+    "title": "Nonlinear Manifold Learning with t-SNE and UMAP",
+    "summary": "This lecture by Professor Bing Brunton (UW) provides a rigorous comparison of t-SNE and UMAP, two leading nonlinear dimensionality reduction techniques. It covers their shared probabilistic interpretation of projection, how similarity distributions are defined in high and low dimensions, and the KL-divergence-based loss functions that drive optimization. The video highlights key theoretical differences and practical trade-offs between the two methods, including their relationship to Laplacian eigenmaps.",
+    "tags": [
+      "t-SNE",
+      "UMAP",
+      "manifold learning",
+      "KL-divergence",
+      "Laplacian eigenmaps",
+      "dimensionality reduction"
+    ],
+    "key_concepts": [
+      "nonlinear manifold learning",
+      "probabilistic projection",
+      "similarity distributions",
+      "KL-divergence loss",
+      "t-SNE optimization",
+      "UMAP optimization",
+      "Laplacian eigenmaps"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Unsupervised Learning",
+    "topic": "Dimension Reduction",
+    "collection": "",
+    "source_type": "youtube",
+    "user_note": "t-SNE vs UMAP",
+    "date_saved": "2026-04-20T16:37:47.677236"
+  },
+  {
+    "id": "73cfe3fd2c",
+    "url": "https://www.youtube.com/watch?v=uOG685WFO00",
+    "title": "ML Drift: Identifying Issues Before You Have a Problem",
+    "summary": "This 15-minute overview covers the two primary types of machine learning drift\u2014concept drift (changing relationships between features and the target) and data drift (production data diverging from training data)\u2014using a loan application scenario as a concrete example. It explains common triggers of drift, strategies for detecting it early using unsupervised learning and data drift monitoring, and techniques for root cause analysis and drift analytics. The resource is useful for practitioners who need to build proactive model monitoring pipelines to prevent silent model degradation from impacting business outcomes.",
+    "tags": [
+      "concept drift",
+      "data drift",
+      "model monitoring",
+      "unsupervised learning",
+      "drift detection",
+      "Fiddler AI",
+      "model degradation"
+    ],
+    "key_concepts": [
+      "concept drift",
+      "data drift",
+      "drift monitoring",
+      "root cause analysis",
+      "model performance degradation",
+      "unsupervised drift detection",
+      "drift analytics"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Data Drift",
+    "topic": "ML drift detection and intervention strategies",
+    "collection": "",
+    "source_type": "youtube",
+    "user_note": "",
+    "date_saved": "2026-04-24T22:24:16.314801"
+  },
+  {
+    "id": "a394275d31",
+    "url": "https://www.kaggle.com/discussions/general/433873",
+    "title": "Borderline-SMOTE: Oversampling Techniques for Imbalanced Data",
+    "summary": "This Kaggle discussion provides a detailed explanation of Borderline-SMOTE, a variant of the standard SMOTE algorithm that focuses synthetic sample generation specifically on minority class instances near the decision boundary. It covers the intuition behind why borderline samples are more informative for classification, the mechanics of identifying 'danger' zone samples, and includes practical code implementation. Useful for practitioners dealing with class imbalance in classification tasks who want a more targeted oversampling strategy than vanilla SMOTE.",
+    "tags": [
+      "SMOTE",
+      "Borderline-SMOTE",
+      "imbalanced data",
+      "oversampling",
+      "class imbalance",
+      "synthetic data generation"
+    ],
+    "key_concepts": [
+      "Borderline-SMOTE",
+      "minority class oversampling",
+      "decision boundary sampling",
+      "danger zone instances",
+      "imbalanced classification",
+      "synthetic minority samples"
+    ],
+    "category": "Machine Learning",
+    "subcategory": "Imbalanced Data",
+    "topic": "SMOTE oversampling",
+    "collection": "",
+    "source_type": "kaggle",
+    "user_note": "good explanation of borderline SMOTE with code",
+    "date_saved": "2026-04-24T22:55:23.884735"
   }
 ]

@@ -412,12 +412,25 @@ def main():
 
     topic_filtered = [e for e in subcat_filtered if browse_topic == "All" or e.get("topic") == browse_topic]
 
-    filtered = topic_filtered
-    filtered = sorted(filtered, key=lambda x: x.get("date_saved", ""), reverse=True)
+    filtered = sorted(topic_filtered, key=lambda x: x.get("date_saved", ""), reverse=True)
 
     if filtered:
-        for entry in filtered:
-            render_card(entry)
+        # Group by category → subcategory
+        from collections import defaultdict
+        groups = defaultdict(lambda: defaultdict(list))
+        for e in filtered:
+            groups[entry_category(e)][e.get("subcategory", "") or "General"].append(e)
+
+        for cat in sorted(groups):
+            cat_entries = [e for sub in groups[cat].values() for e in sub]
+            cat_label = f"{cat}  ·  {len(cat_entries)} source{'s' if len(cat_entries) != 1 else ''}"
+            with st.expander(cat_label, expanded=False):
+                for subcat in sorted(groups[cat]):
+                    entries = groups[cat][subcat]
+                    sub_label = f"{subcat}  ·  {len(entries)} source{'s' if len(entries) != 1 else ''}"
+                    with st.expander(sub_label, expanded=False):
+                        for entry in entries:
+                            render_card(entry)
     else:
         st.markdown('<div style="color:#555;font-family:DM Mono,monospace;font-size:0.85rem">No sources saved yet. Add your first URL above.</div>', unsafe_allow_html=True)
 
