@@ -12,219 +12,280 @@ st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap');
 
-    html, body, [class*="css"] {
-        font-family: 'DM Sans', sans-serif;
-    }
-    .main { background-color: #0f0f0f; }
-    .stApp { background-color: #0f0f0f; }
+    /* ── Base ───────────────────────────────────────────── */
+    html, body, [class*="css"] { font-family: 'DM Sans', sans-serif; }
+    .main, .stApp { background-color: #111111; }
+    h1, h2, h3 { font-family: 'DM Serif Display', serif; color: #ede9df; }
 
-    h1, h2, h3 { font-family: 'DM Serif Display', serif; color: #f0ebe0; }
-
+    /* ── Hero ───────────────────────────────────────────── */
     .hero-title {
         font-family: 'DM Serif Display', serif;
-        font-size: 3.2rem;
-        color: #f0ebe0;
+        font-size: 2.8rem;
+        color: #ede9df;
         line-height: 1.1;
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.25rem;
     }
     .hero-sub {
         font-family: 'DM Mono', monospace;
-        font-size: 0.8rem;
-        color: #888;
-        letter-spacing: 0.15em;
+        font-size: 0.7rem;
+        color: #484440;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
         margin-bottom: 2rem;
     }
-    .card {
-        background: #1a1a1a;
-        border: 1px solid #2a2a2a;
-        border-radius: 12px;
-        padding: 1.2rem 1.4rem;
-        margin-bottom: 0.3rem;
-        transition: border-color 0.2s;
-    }
-    .card:hover { border-color: #c9a96e; }
-    .card-title {
-        font-family: 'DM Serif Display', serif;
-        font-size: 1.05rem;
-        color: #f0ebe0;
-        margin-bottom: 0.3rem;
-    }
-    .card-summary {
-        font-size: 0.88rem;
-        color: #999;
-        line-height: 1.6;
-        margin-bottom: 0.6rem;
-    }
-    .card-meta {
-        font-family: 'DM Mono', monospace;
-        font-size: 0.72rem;
-        color: #555;
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .card-meta-left {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-    /* Gear toggle button — small, subtle, sits left of edit fields */
-    [data-testid="baseButton-secondary"] {
-        background: #1e1e1e !important;
-        border: 1px solid #555 !important;
-        color: #888 !important;
-        padding: 2px 8px !important;
-        font-size: 0.75rem !important;
-        font-family: 'DM Mono', monospace !important;
-        border-radius: 4px !important;
-        line-height: 1.5 !important;
-    }
-    [data-testid="baseButton-secondary"]:hover {
-        border-color: #888 !important;
-        color: #bbb !important;
-    }
-    .collection-badge {
-        background: #0f1420;
-        border: 1px solid #1a2a40;
-        border-radius: 4px;
-        padding: 2px 8px;
+
+    /* ── Section labels ─────────────────────────────────── */
+    .section-label {
         font-family: 'DM Mono', monospace;
         font-size: 0.7rem;
-        color: #6b9bcf;
+        color: #5a5650;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        margin: 0 0 1.25rem 0;
+        padding-bottom: 0.6rem;
+        border-bottom: 1px solid #1e1e1e;
     }
-    .breadcrumb { color: #555; }
-    .tag {
-        background: #252525;
-        border: 1px solid #333;
-        border-radius: 4px;
-        padding: 2px 8px;
-        font-family: 'DM Mono', monospace;
-        font-size: 0.7rem;
-        color: #c9a96e;
-    }
-    .source-badge {
-        font-family: 'DM Mono', monospace;
-        font-size: 0.7rem;
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-weight: 500;
-    }
-    .source-youtube { background: #1a0f0f; color: #ff6b6b; border: 1px solid #3a1a1a; }
-    .source-kaggle  { background: #0f1a1a; color: #6bcfcf; border: 1px solid #1a3a3a; }
-    .source-web     { background: #0f1a0f; color: #6bcf6b; border: 1px solid #1a3a1a; }
-    .divider { border: none; border-top: 1px solid #222; margin: 1.5rem 0; }
+
+    /* ── Stats ──────────────────────────────────────────── */
     .stat-box {
-        background: #1a1a1a;
-        border: 1px solid #2a2a2a;
-        border-radius: 10px;
-        padding: 1rem;
+        background: #161616;
+        border: 1px solid #1e1e1e;
+        border-radius: 6px;
+        padding: 0.9rem 1rem;
         text-align: center;
     }
     .stat-num {
         font-family: 'DM Serif Display', serif;
-        font-size: 2rem;
+        font-size: 1.75rem;
         color: #c9a96e;
+        line-height: 1.2;
     }
     .stat-label {
         font-family: 'DM Mono', monospace;
-        font-size: 0.7rem;
-        color: #555;
+        font-size: 0.65rem;
+        color: #484440;
         text-transform: uppercase;
         letter-spacing: 0.1em;
+        margin-top: 0.15rem;
     }
-    /* Input fields */
+
+    /* ── Cards ──────────────────────────────────────────── */
+    .card {
+        background: #181818;
+        border: 1px solid #222222;
+        border-radius: 8px;
+        padding: 1.1rem 1.25rem;
+        margin-bottom: 0.75rem;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover {
+        border-color: #3a3530;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    .card-title {
+        font-family: 'DM Serif Display', serif;
+        font-size: 1rem;
+        color: #ede9df;
+        margin-bottom: 0.35rem;
+        line-height: 1.4;
+    }
+    .card-summary {
+        font-size: 0.875rem;
+        color: #7a7672;
+        line-height: 1.7;
+        margin-bottom: 0.65rem;
+    }
+    .card-meta {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.68rem;
+        color: #484440;
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 0.6rem;
+        padding-top: 0.6rem;
+        border-top: 1px solid #1e1e1e;
+    }
+    .card-meta-left {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .breadcrumb { color: #484440; }
+
+    /* ── Tags & badges ──────────────────────────────────── */
+    .tag {
+        border: 1px solid #282420;
+        border-radius: 3px;
+        padding: 1px 6px;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.68rem;
+        color: #8a7a5a;
+    }
+    .source-badge {
+        font-family: 'DM Mono', monospace;
+        font-size: 0.65rem;
+        padding: 1px 6px;
+        border-radius: 3px;
+        font-weight: 500;
+        letter-spacing: 0.03em;
+    }
+    .source-youtube { color: #904040; border: 1px solid #2a1414; }
+    .source-kaggle  { color: #407a7a; border: 1px solid #14282a; }
+    .source-web     { color: #407050; border: 1px solid #142218; }
+    .collection-badge {
+        border: 1px solid #1a2a40;
+        border-radius: 3px;
+        padding: 1px 6px;
+        font-family: 'DM Mono', monospace;
+        font-size: 0.68rem;
+        color: #3a5a7a;
+    }
+
+    /* ── Expanders ──────────────────────────────────────── */
+    [data-testid="stExpander"] {
+        border: 1px solid #1e1e1e !important;
+        border-radius: 6px !important;
+        margin-bottom: 0.35rem !important;
+        overflow: hidden !important;
+    }
+    [data-testid="stExpander"] details summary {
+        font-family: 'DM Mono', monospace !important;
+        font-size: 0.72rem !important;
+        color: #6a6460 !important;
+        letter-spacing: 0.06em !important;
+        padding: 0.65rem 0.9rem !important;
+        user-select: none !important;
+    }
+    [data-testid="stExpander"] details summary:hover {
+        color: #c8c3b8 !important;
+        background: #161616 !important;
+    }
+    [data-testid="stExpander"] details[open] summary {
+        border-bottom: 1px solid #1e1e1e !important;
+        color: #a8a49c !important;
+    }
+
+    /* ── Inputs ─────────────────────────────────────────── */
     .stTextInput > div > div > input {
-        background: #1a1a1a !important;
-        border: 1px solid #2a2a2a !important;
-        color: #f0ebe0 !important;
-        border-radius: 8px !important;
+        background: #161616 !important;
+        border: 1px solid #222 !important;
+        color: #ede9df !important;
+        border-radius: 6px !important;
         font-family: 'DM Sans', sans-serif !important;
+        font-size: 0.875rem !important;
     }
     .stTextInput > div > div > input:focus {
-        border-color: #c9a96e !important;
-        box-shadow: 0 0 0 1px #c9a96e22 !important;
+        border-color: #7a6040 !important;
+        box-shadow: 0 0 0 1px #7a604018 !important;
     }
-    input::placeholder { color: #555 !important; }
-
-    /* All widget labels */
+    input::placeholder { color: #333 !important; }
     label, [data-testid="stWidgetLabel"] p {
-        color: #c8c3b8 !important;
+        color: #5a5650 !important;
+        font-size: 0.75rem !important;
+        font-family: 'DM Mono', monospace !important;
     }
 
-    /* Selectbox trigger */
+    /* ── Selectboxes ────────────────────────────────────── */
     [data-baseweb="select"] > div {
-        background-color: #1a1a1a !important;
-        border-color: #2a2a2a !important;
-        color: #f0ebe0 !important;
+        background-color: #161616 !important;
+        border-color: #222 !important;
+        color: #ede9df !important;
+        border-radius: 6px !important;
     }
-    [data-baseweb="select"] [data-baseweb="tag"] { color: #f0ebe0 !important; }
-    [data-baseweb="select"] span { color: #f0ebe0 !important; }
-
-    /* Dropdown popup and options */
+    [data-baseweb="select"] [data-baseweb="tag"] { color: #ede9df !important; }
+    [data-baseweb="select"] span { color: #ede9df !important; }
     [data-baseweb="popover"] > div { background-color: #1a1a1a !important; }
     [role="listbox"]               { background-color: #1a1a1a !important; }
     [data-baseweb="option"] {
         background-color: #1a1a1a !important;
-        color: #f0ebe0 !important;
+        color: #a8a49c !important;
+        font-size: 0.875rem !important;
     }
     [data-baseweb="option"]:hover,
     [data-baseweb="option"][aria-selected="true"] {
-        background-color: #252525 !important;
-        color: #f0ebe0 !important;
-    }
-    [data-testid="baseButton-primary"] {
-        background: #2a1010 !important;
-        color: #ff6b6b !important;
-        border: 1px solid #5a2020 !important;
-        border-radius: 8px !important;
-        font-family: 'DM Mono', monospace !important;
-        font-weight: 400 !important;
-    }
-    [data-testid="baseButton-primary"]:hover {
-        border-color: #ff6b6b !important;
-        color: #ff8888 !important;
-    }
-    .stButton > button[kind='secondary'] {
-        background: #252525 !important;
-        color: #c8c3b8 !important;
-        border: 1px solid #3a3a3a !important;
-        border-radius: 8px !important;
-        font-family: 'DM Sans', sans-serif !important;
-        font-weight: 500 !important;
-    }
-    .stButton > button[kind='secondary']:hover {
-        background: #2e2e2e !important;
-        border-color: #555 !important;
+        background-color: #202020 !important;
+        color: #ede9df !important;
     }
     .stSelectbox > div > div {
-        background: #1a1a1a !important;
-        border-color: #2a2a2a !important;
-        color: #f0ebe0 !important;
+        background: #161616 !important;
+        border-color: #222 !important;
+        color: #ede9df !important;
     }
+
+    /* ── Buttons ────────────────────────────────────────── */
+    [data-testid="baseButton-secondary"] {
+        background: #161616 !important;
+        border: 1px solid #242424 !important;
+        color: #5a5650 !important;
+        padding: 3px 10px !important;
+        font-size: 0.7rem !important;
+        font-family: 'DM Mono', monospace !important;
+        border-radius: 4px !important;
+        line-height: 1.5 !important;
+        transition: border-color 0.15s, color 0.15s !important;
+    }
+    [data-testid="baseButton-secondary"]:hover {
+        border-color: #484440 !important;
+        color: #a8a49c !important;
+    }
+    .stButton > button[kind='secondary'] {
+        background: #161616 !important;
+        color: #8a8680 !important;
+        border: 1px solid #242424 !important;
+        border-radius: 6px !important;
+        font-family: 'DM Sans', sans-serif !important;
+        font-size: 0.875rem !important;
+        font-weight: 400 !important;
+        transition: border-color 0.15s, color 0.15s !important;
+    }
+    .stButton > button[kind='secondary']:hover {
+        background: #1a1a1a !important;
+        border-color: #484440 !important;
+        color: #c8c3b8 !important;
+    }
+    [data-testid="baseButton-primary"] {
+        background: #1a0f0f !important;
+        color: #904040 !important;
+        border: 1px solid #2a1414 !important;
+        border-radius: 6px !important;
+        font-family: 'DM Mono', monospace !important;
+        font-size: 0.7rem !important;
+        font-weight: 400 !important;
+        transition: border-color 0.15s, color 0.15s !important;
+    }
+    [data-testid="baseButton-primary"]:hover {
+        border-color: #904040 !important;
+        color: #c05050 !important;
+    }
+
+    /* ── Messages ───────────────────────────────────────── */
     .success-msg {
-        background: #0f1a0f;
-        border: 1px solid #2a4a2a;
-        border-radius: 8px;
-        padding: 0.8rem 1rem;
-        color: #6bcf6b;
+        background: #0d140d;
+        border: 1px solid #1a321a;
+        border-radius: 6px;
+        padding: 0.65rem 0.9rem;
+        color: #4a8a4a;
         font-family: 'DM Mono', monospace;
-        font-size: 0.82rem;
+        font-size: 0.75rem;
     }
     .error-msg {
-        background: #1a0f0f;
-        border: 1px solid #4a2a2a;
-        border-radius: 8px;
-        padding: 0.8rem 1rem;
-        color: #ff6b6b;
+        background: #140d0d;
+        border: 1px solid #321a1a;
+        border-radius: 6px;
+        padding: 0.65rem 0.9rem;
+        color: #904040;
         font-family: 'DM Mono', monospace;
-        font-size: 0.82rem;
+        font-size: 0.75rem;
     }
+
+    /* ── Misc ───────────────────────────────────────────── */
+    .divider { border: none; border-top: 1px solid #191919; margin: 2rem 0; }
     a { color: #c9a96e !important; text-decoration: none; }
-    a:hover { color: #d4b87a !important; text-decoration: underline; }
+    a:hover { color: #c9a96e !important; text-decoration: underline; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -339,7 +400,7 @@ def main():
 
     # --- LEFT: Add a URL ---
     with left:
-        st.markdown("### Add a source")
+        st.markdown('<p class="section-label">Add a source</p>', unsafe_allow_html=True)
         url_input = st.text_input("Paste a URL", placeholder="https://...")
         cat_col, subcat_col, topic_col = st.columns(3)
         with cat_col:
@@ -369,7 +430,7 @@ def main():
 
     # --- RIGHT: Search ---
     with right:
-        st.markdown("### Search your library")
+        st.markdown('<p class="section-label">Search your library</p>', unsafe_allow_html=True)
         query = st.text_input("What are you looking for?", placeholder="e.g. class imbalance, Cox PH, DAX filter context")
 
         filter_category = st.selectbox("Filter by category", ["All"] + sorted(set(entry_category(e) for e in index)))
@@ -391,7 +452,7 @@ def main():
     st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
     # --- Full library browser ---
-    st.markdown("### Your library")
+    st.markdown('<p class="section-label">Your library</p>', unsafe_allow_html=True)
     f1, f2, f3 = st.columns(3)
 
     with f1:
